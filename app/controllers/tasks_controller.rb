@@ -1,12 +1,13 @@
 class TasksController < ApplicationController
   def index
     @tasks = Task.all
+    @task = Task.new
     render('tasks/index.html.erb')
   end
 
   def new
     @task = Task.new
-    render('tasks/new.html.erb')
+    render('tasks/index.html.erb')
   end
 
   def create
@@ -15,7 +16,7 @@ class TasksController < ApplicationController
     if @task.save
       render('tasks/success.html.erb')
     else
-      render('tasks/new.html.erb')
+      render('tasks/index.html.erb')
     end
   end
 
@@ -33,10 +34,16 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     if @task.update(:name => params[:name],
                     :status => params[:status])
-      render('tasks/success.html.erb')
+      render('tasks/index.html.erb')
     else
       render('tasks/edit.html.erb')
     end
+  end
+
+  def destroy
+    @task = Task.find(params[:id])
+    @task.destroy
+    render('tasks/index.html.erb')
   end
 
 end
