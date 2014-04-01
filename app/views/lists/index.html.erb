@@ -1,0 +1,32 @@
+<h1>TO DO</h1>
+
+<h2>Lists:</h2>
+<ul>
+<% @lists.each do |list| %>
+  <li><a href="/lists/<%= list.id %>/"><%= list.name %></a>  |
+    <a href="/lists/<%= list.id %>/edit">EDIT</a>  |
+    <a href="/lists/<%= list.id %>/"
+      data-confirm="You sure?"
+      data-method="delete"
+      rel="nofollow">DELETE</a>
+  </li>
+<% end %>
+</ul>
+
+<hr>
+
+<h1>Add New List</h1>
+
+<% if @list.errors.any? %>
+  <ul>
+  <% @list.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+  <% end %>
+  </ul>
+<% end %>
+
+<form action="/lists" method="post">
+  <label for="list_name">Name:</label>
+  <input for="list_name" name="name" type="text">
+  <button>Create List</button>
+</form>

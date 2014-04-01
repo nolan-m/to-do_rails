@@ -12,7 +12,8 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(:name => params[:name],
-                        :status => false)
+                        :status => false,
+                        :list_id => params[:list_id])
     if @task.save
       render('tasks/success.html.erb')
     else
@@ -34,7 +35,7 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     if @task.update(:name => params[:name],
                     :status => params[:status])
-      render('tasks/index.html.erb')
+      render('tasks/success.html.erb')
     else
       render('tasks/edit.html.erb')
     end
@@ -43,7 +44,7 @@ class TasksController < ApplicationController
   def destroy
     @task = Task.find(params[:id])
     @task.destroy
-    render('tasks/index.html.erb')
+    render('tasks/success.html.erb')
   end
 
 end

@@ -1,0 +1,50 @@
+<h1>List: <%= @list.name %></h1>
+
+<h2>Incomplete Tasks:</h2>
+<ul>
+<% @list.not_done_tasks.each do |task| %>
+  <li><%= task.name %>  |
+    <a href="/tasks/<%= task.id %>/edit">EDIT</a>  |
+    <a href="/tasks/<%= task.id %>/"
+      data-confirm="You sure?"
+      data-method="delete"
+      rel="nofollow">DELETE</a>
+  <form action="/tasks/<%= task.id %>" method="post">
+  <input name="name" type="hidden" value="<%= task.name %>">
+  <input name="_method" type="hidden" value="patch">
+  <input name="status" type="hidden" value="true">
+  <button>Mark done</button>
+  </form>
+  </li>
+<% end %>
+</ul>
+
+<h2>Completed Tasks:</h2>
+<ul>
+  <% @list.done_tasks.each do |task| %>
+  <li><%= task.name %>  |
+    <a href="/tasks/<%= task.id %>/"
+      data-confirm="You sure?"
+      data-method="delete"
+      rel="nofollow">DELETE</a>
+  </li>
+  <% end %>
+</ul>
+
+<hr>
+
+<h1>Add New Task</h1>
+
+<% if @task.errors.any? %>
+  <ul>
+  <% @task.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+  <% end %>
+  </ul>
+<% end %>
+
+<form action="/lists/<%= @list.id %>/tasks" method="post">
+  <label for="task_name">Name:</label>
+  <input for="task_name" name="name" type="text">
+  <button>Create Task</button>
+</form>
